@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>أذكاري | أذكار صباح ومساء والأدعية المستجابة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(145deg, #f5fdf2 0%, #eaf7e1 100%);
+            color: #1e3a2a;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0e8e3;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7caa7a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a9b59;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5%, 2rem);
+            width: 100%;
+        }
+
+        .header {
+            background: rgba(248, 252, 250, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(42, 120, 64, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(42, 120, 64, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(1rem, 3vw, 1.5rem) 0;
+            flex-wrap: wrap;
+            gap: clamp(1rem, 2vw, 2rem);
+        }
+
+        .logo h1 {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #2a7840, #1b5a2b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            display: block;
+            color: #256f38;
+            font-weight: 500;
+        }
+
+        .hero {
+            padding: clamp(3rem, 10vw, 5rem) 0;
+            text-align: center;
+        }
+
+        .hero-content h2 {
+            font-size: clamp(1.8rem, 7vw, 3.2rem);
+            font-weight: 800;
+            color: #1f4a2d;
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #2b5f3a;
+            max-width: 700px;
+            margin: 0 auto clamp(2rem, 4vw, 3rem);
+            line-height: 1.7;
+        }
+
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 90vw, 280px), 1fr));
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+            margin-top: clamp(1rem, 3vw, 2rem);
+        }
+
+        .selection-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: clamp(1.5rem, 5vw, 2.5rem);
+            padding: clamp(2rem, 4vw, 2.5rem);
+            text-align: center;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(42, 120, 64, 0.08);
+            border: 2px solid rgba(124, 170, 122, 0.4);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+        }
+
+        .selection-card:hover {
+            transform: translateY(-8px);
+            background: white;
+            box-shadow: 0 15px 30px rgba(42, 120, 64, 0.12);
+            border-color: #7caa7a;
+        }
+
+        .selection-icon {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #2a7840;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .selection-card h3 {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: #1f4a2d;
+        }
+
+        .selection-card p {
+            color: #3d6a48;
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            background: linear-gradient(95deg, #7caa7a, #5a9b59);
+            color: white;
+            border: none;
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 120, 64, 0.25);
+        }
+
+        .content-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: #1f4a2d;
+        }
+
+        .dhikr-list {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1.25rem, 3vw, 1.75rem);
+        }
+
+        .dhikr-item {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: clamp(1.25rem, 4vw, 1.75rem);
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border-right: 4px solid #2a7840;
+            box-shadow: 0 6px 16px rgba(42, 120, 64, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .dhikr-item:hover {
+            transform: translateX(-8px);
+            box-shadow: 0 10px 25px rgba(42, 120, 64, 0.12);
+        }
+
+        .dhikr-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            color: #1f4a2d;
+            font-weight: 600;
+            line-height: 1.8;
+            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+        }
+
+        .dhikr-count {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: #2b5f3a;
+            font-weight: 500;
+        }
+
+        .counter {
+            display: inline-block;
+            background: linear-gradient(135deg, #7caa7a, #5a9b59);
+            color: white;
+            padding: clamp(0.4rem, 1vw, 0.6rem) clamp(0.8rem, 2vw, 1.2rem);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            margin-left: 0.5rem;
+        }
+
+        .copy-btn {
+            background: #f5fdf2;
+            border: 2px solid #2a7840;
+            color: #2a7840;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            transition: all 0.3s ease;
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            display: inline-block;
+        }
+
+        .copy-btn:hover {
+            background: #2a7840;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: clamp(2rem, 4vw, 2.5rem) 0;
+            border-top: 1px solid #b4d2a8;
+            margin-top: clamp(2rem, 5vw, 3rem);
+            color: #3d6a48;
+            font-weight: 500;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+        }
+
+        .floating-heart {
+            position: fixed;
+            bottom: clamp(1rem, 3vw, 1.5rem);
+            left: clamp(1rem, 3vw, 1.5rem);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        @media (max-width: 768px) {
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            html {
+                font-size: 14px;
+            }
+
+            .dhikr-item {
+                border-right-width: 3px;
+            }
+
+            .floating-heart {
+                bottom: 1rem;
+                left: 1rem;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            html {
+                font-size: 13px;
+            }
+
+            .selection-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .dhikr-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-heart">
+    <i class="fas fa-leaf" style="color: #2a7840;"></i>
+</div>
+
+<header class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <h1>أذكاري</h1>
+                <span>أذكار وأدعية</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Main Selection View -->
+    <div id="mainView" class="content-section active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>اختار ما تريد 🤍</h2>
+                    <p>أذكار الصباح والمساء والأدعية المستجابة لتقويه روحك الإيمانية وتملأ يومك بالسلام والطمأنينة</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="selection-grid">
+                <div class="selection-card" onclick="showContent('morning')">
+                    <div class="selection-icon"><i class="fas fa-sun"></i></div>
+                    <h3>أذكار الصباح</h3>
+                    <p>استقبلي يومك بأذكار الصباح الجميلة</p>
+                </div>
+
+                <div class="selection-card" onclick="showContent('evening')">
+                    <div class="selection-icon"><i class="fas fa-moon"></i></div>
+                    <h3>أذكار المساء</h3>
+                    <p>ختمي يومك بأذكار المساء المريحة</p>
+                </div>
+
+                <div class="selection-card" onclick="showContent('duaa')">
+                    <div class="selection-icon"><i class="fas fa-book"></i></div>
+                    <h3>الأدعية المستجابة</h3>
+                    <p>ادعي ربك بأدعية مختارة ومستجابة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Morning Dhikr View -->
+    <div id="morningView" class="content-section">
+        <div class="container">
+            <div class="content-header">
+                <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> رجوع</button>
+                <h2 class="content-title"><i class="fas fa-sun"></i> أذكار الصباح</h2>
+            </div>
+
+            <div class="dhikr-list">
+                <div class="dhikr-item">
+                    <div class="dhikr-text">أَعُوذُ بِاللّهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br><br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: حفظ عظيم وحماية</div>
+                    <button class="copy-btn" onclick="copyToClipboard('أعوذ بالله من الشيطان الرجيم، الله لا إله إلا هو الحي القيوم')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عدل ثلث القرآن</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل هو الله أحد')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حماية من كل شر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل أعوذ برب الفلق')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حماية من وساوس الشيطان</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل أعوذ برب الناس')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">أَصْـبَحْنا وَأَصْـبَحَ المُـلْكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذا اليوم وَخَـيرَ ما بَعْـدَه ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذا اليوم وَشَرِّ ما بَعْـدَه، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: استقبال اليوم بطاعة وحماية</div>
+                    <button class="copy-btn" onclick="copyToClipboard('أصبحنا وأصبح الملك لله والحمد لله')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: مغفرة الذنوب والتوكل على الله</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم أنت ربي لا إله إلا أنت')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: رضا الله عنك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('رضيت بالله رباً وبالإسلام ديناً')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: مغفرة الذنوب ورحمة الله</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: رضا الله عنك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('رضيت بالله رباً وبالإسلام ديناً وبمحمد نبياً')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: شهادة الملائكة لك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم إني أصبحت أشهدك وأشهد حملة عرشك')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللَّهُمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: شكر النعم وتحصيل المزيد</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم ما أصبح بي من نعمة فمنك وحدك')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم</div>
+                    <div class="dhikr-count"><span class="counter">7 مرات</span> | الفضل: كفاية الله لك في جميع أحوالك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('حسبي الله لا إله إلا هو عليه توكلت')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حفظ من كل ضرر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('بسم الله الذي لا يضر معه شيء')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: تغفر الذنوب ولو كانت مثل زبد البحر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('سبحان الله وبحمده عدد خلقه')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ عافِـني في بَدَنـي ، اللّهُـمَّ عافِـني في سَمْـعي ، اللّهُـمَّ عافِـني في بَصَـري ، لا إلهَ إلاّ أَنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عافية الجسد والحس والبصر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم عافني في بدني وسمعي وبصري')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ إني أعوذ بك من الكفر و الفقر و أعوذ بك من عذاب القبر, لا إلاه إالا أنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عافية الجسد والحس والبصر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم عافني في بدني وسمعي وبصري')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">لاَ إلَهَ إلاَّ اللهُ وحده لا شريك له، له الملك و له الحمد و هو على كل شيء قدير</div>
+                    <div class="dhikr-count"><span class="counter">100 مرة</span> | الفضل: كأنك حررت عشرة رقاب، 100 حسنة و محو 100 سيئة</div>
+                    <button class="copy-btn" onclick="copyToClipboard('لا إله إلا الله وحده لا شريك له')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">سُبْحـانَ الله وَبِحَمْـدِهِ</div>
+                    <div class="dhikr-count"><span class="counter">100 مرة</span> | الفضل: تغفر الذنوب ولو كانت مثل زبد البحر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('سبحان الله وبحمده')">📋 نسخ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evening Dhikr View -->
+    <div id="eveningView" class="content-section">
+        <div class="container">
+            <div class="content-header">
+                <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> رجوع</button>
+                <h2 class="content-title"><i class="fas fa-moon"></i> أذكار المساء</h2>
+            </div>
+
+            <div class="dhikr-list">
+                <div class="dhikr-item">
+                    <div class="dhikr-text">أَعُوذُ بِاللّهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br><br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: حفظ عظيم وحماية</div>
+                    <button class="copy-btn" onclick="copyToClipboard('أعوذ بالله من الشيطان الرجيم، الله لا إله إلا هو الحي القيوم')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عدل ثلث القرآن</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل هو الله أحد')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حماية من كل شر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل أعوذ برب الفلق')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بسم الله الرحمان الرَّجِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حماية من وساوس الشيطان</div>
+                    <button class="copy-btn" onclick="copyToClipboard('قل أعوذ برب الناس')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">أَمْسَيْـنا وَأَمْسـى المـلكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذه اللَّيْلَة وَخَـيرَ ما بَعْـدَها ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذه اللَّيْلَة وَشَرِّ ما بَعْـدَها، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: استقبال الليل بطاعة وحماية</div>
+                    <button class="copy-btn" onclick="copyToClipboard('أمسينا وأمسى الملك لله والحمد لله')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: مغفرة الذنوب والتوكل على الله</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم أنت ربي لا إله إلا أنت')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: رضا الله عنك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('رضيت بالله رباً وبالإسلام ديناً')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ إِنِّـي أَمسيتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: شهادة الملائكة لك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم إني أمسيت أشهدك وأشهد حملة عرشك')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللَّهُمَّ ما أَمسـى بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: شكر النعم وتحصيل المزيد</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم ما أمسى بي من نعمة فمنك وحدك')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم</div>
+                    <div class="dhikr-count"><span class="counter">7 مرات</span> | الفضل: كفاية الله لك في جميع أحوالك</div>
+                    <button class="copy-btn" onclick="copyToClipboard('حسبي الله لا إله إلا هو عليه توكلت')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: حفظ من كل ضرر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('بسم الله الذي لا يضر معه شيء')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: تغفر الذنوب ولو كانت مثل زبد البحر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('سبحان الله وبحمده عدد خلقه')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ عافِـني في بَدَنـي ، اللّهُـمَّ عافِـني في سَمْـعي ، اللّهُـمَّ عافِـني في بَصَـري ، لا إلهَ إلاّ أَنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عافية الجسد والحس والبصر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم عافني في بدني وسمعي وبصري')">📋 نسخ</button>
+                </div>
+
+               <div class="dhikr-item">
+                    <div class="dhikr-text">اللّهُـمَّ إني أعوذ بك من الكفر و الفقر و أعوذ بك من عذاب القبر, لا إلاه إالا أنْـتَ</div>
+                    <div class="dhikr-count"><span class="counter">3 مرات</span> | الفضل: عافية الجسد والحس والبصر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم عافني في بدني وسمعي وبصري')">📋 نسخ</button>
+                </div>
+
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">يَا حَيُّ يَا قيُّومُ بِرَحْمَتِكَ أسْتَغِيثُ أصْلِحْ لِي شَأنِي كُلَّهُ وَلاَ تَكِلْنِي إلَى نَفْسِي طَـرْفَةَ عَيْنٍ</div>
+                    <div class="dhikr-count"><span class="counter">1 مرة</span> | الفضل: استصلاح جميع الأحوال</div>
+                    <button class="copy-btn" onclick="copyToClipboard('يا حي يا قيوم برحمتك أستغيث')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">لاَ إلَهَ إلاَّ اللهُ وحده لا شريك له، له الملك و له الحمد و هو على كل شيء قدير</div>
+                    <div class="dhikr-count"><span class="counter">100 مرة</span> | الفضل: كأنك حررت عشرة رقاب، 100 حسنة و محو 100 سيئة</div>
+                    <button class="copy-btn" onclick="copyToClipboard('لا إله إلا الله وحده لا شريك له')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">سُبْحـانَ الله وَبِحَمْـدِهِ</div>
+                    <div class="dhikr-count"><span class="counter">100 مرة</span> | الفضل: تغفر الذنوب ولو كانت مثل زبد البحر</div>
+                    <button class="copy-btn" onclick="copyToClipboard('سبحان الله وبحمده')">📋 نسخ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prayers View -->
+    <div id="duaaView" class="content-section">
+        <div class="container">
+            <div class="content-header">
+                <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> رجوع</button>
+                <h2 class="content-title"><i class="fas fa-book"></i> الأدعية المستجابة</h2>
+            </div>
+
+            <div class="dhikr-list">
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً"</div>
+                    <div class="dhikr-count">دعاء لتيسير الأمور</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين"</div>
+                    <div class="dhikr-count">دعاء لقضاء الحاجات</div>
+                    <button class="copy-btn" onclick="copyToClipboard('يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"اللهم إني أسألك الهدى والتقى والعفاف والغنى"</div>
+                    <div class="dhikr-count">دعاء للطاعة والتقوى</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم إني أسألك الهدى والتقى والعفاف والغنى')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"اللهم اغفر لي ذنبي كله دقه وجله أوله وآخره علانيته وسره"</div>
+                    <div class="dhikr-count">دعاء للمغفرة</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم اغفر لي ذنبي كله دقه وجله أوله وآخره علانيته وسره')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"اللهم إني أسألك دعاء لا ترد، وذكراً لا تنسى، ورحمة لا تنقطع"</div>
+                    <div class="dhikr-count">دعاء عام مستجاب</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم إني أسألك دعاء لا ترد، وذكراً لا تنسى، ورحمة لا تنقطع')">📋 نسخ</button>
+                </div>
+
+                <div class="dhikr-item">
+                    <div class="dhikr-text">"اللهم صل وسلم على نبينا محمد وعلى آله وصحبه أجمعين"</div>
+                    <div class="dhikr-count">الصلاة على النبي</div>
+                    <button class="copy-btn" onclick="copyToClipboard('اللهم صل وسلم على نبينا محمد وعلى آله وصحبه أجمعين')">📋 نسخ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 أذكاري | جميع الحقوق محفوظة</p>
+        <p style="margin-top: 0.5rem; font-size: clamp(0.75rem, 1.5vw, 0.85rem);">🤍 أذكار صباح ومساء وأدعية مستجابة لتقويه إيمانك</p>
+    </div>
+</footer>
+
+<script>
+    function showContent(type) {
+        // Hide main view
+        document.getElementById('mainView').classList.remove('active');
+        
+        // Hide all content views
+        document.getElementById('morningView').classList.remove('active');
+        document.getElementById('eveningView').classList.remove('active');
+        document.getElementById('duaaView').classList.remove('active');
+        
+        // Show selected view
+        if(type === 'morning') {
+            document.getElementById('morningView').classList.add('active');
+        } else if(type === 'evening') {
+            document.getElementById('eveningView').classList.add('active');
+        } else if(type === 'duaa') {
+            document.getElementById('duaaView').classList.add('active');
+        }
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function goBack() {
+        // Hide all content views
+        document.getElementById('morningView').classList.remove('active');
+        document.getElementById('eveningView').classList.remove('active');
+        document.getElementById('duaaView').classList.remove('active');
+        
+        // Show main view
+        document.getElementById('mainView').classList.add('active');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('✅ تم نسخ الذكر');
+        }).catch(() => {
+            alert('❌ حدث خطأ في النسخ');
+        });
+    }
+</script>
+
+</body>
+</html>
